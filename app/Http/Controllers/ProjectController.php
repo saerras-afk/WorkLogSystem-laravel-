@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Project;
+use App\Models\Sprint;
 
 class ProjectController extends Controller
 {
@@ -17,7 +19,10 @@ class ProjectController extends Controller
     }
 
     public function index(){
-        
+        $project = Project::all();
+        $sprint = Sprint::all();
+
+        return view('project',compact('project','sprint'));
     }
 
 }
