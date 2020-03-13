@@ -25,9 +25,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
-
-    
-
     Route::name('project')->prefix('project')->group(function(){
         Route::get('/','ProjectController@index');
         Route::post('/addProject','ProjectController@createProj')->name('addProject');
