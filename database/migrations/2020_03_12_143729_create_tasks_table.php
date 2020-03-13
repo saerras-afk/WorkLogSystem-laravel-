@@ -23,10 +23,10 @@ class CreateTasksTable extends Migration
             $table->string('taskName');
             $table->string('description',200);
             $table->string('summary',150);
-            $table->integer('projManager');
-            $table->integer('scrumMaster');
-            $table->integer('qualityAssurance');
-            $table->integer('developer');
+            $table->integer('projManager')->nullable()->unsigned();
+            $table->integer('scrumMaster')->nullable()->unsigned();
+            $table->integer('qualityAssurance')->nullable()->unsigned();
+            $table->integer('developer')->nullable()->unsigned();
             $table->dateTime('deadline');
             $table->boolean('blnFlag');
             $table->timestamps();
@@ -37,6 +37,10 @@ class CreateTasksTable extends Migration
             $table->foreign('priorityId')->references('id')->on('priorities');
             $table->foreign('statusId')->references('id')->on('statuses');
             $table->foreign('sprintId')->references('id')->on('sprints');
+            $table->foreign('projManager')->references('id')->on('users');
+            $table->foreign('scrumMaster')->references('id')->on('users');
+            $table->foreign('qualityAssurance')->references('id')->on('users');
+            $table->foreign('developer')->references('id')->on('users');
         });
     }
 

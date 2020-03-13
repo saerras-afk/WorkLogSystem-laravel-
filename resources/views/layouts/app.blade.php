@@ -71,6 +71,16 @@
                 </div>
             </div>
         </nav>
+        @if (Auth::user())
+            <aside>
+                <ul>
+                    <li>dashboard</li>
+                    <li><a href="{{ route('project') }}">projects</a></li>
+                    <li>reports</li>
+                    <li>manage user</li>
+                </ul>
+            </aside>
+        @endif
         <main class="py-4">
             @yield('content')
         </main>
