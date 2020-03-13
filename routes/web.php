@@ -25,7 +25,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::get('/project','ProjectController@index')->name('project');
+
+    
+
+    Route::name('project')->prefix('project')->group(function(){
+        Route::get('/','ProjectController@index');
+        Route::post('/addProject','ProjectController@createProj')->name('addProject');
+        Route::post('/addSprint','ProjectController@createSpri')->name('addSprint');
+        Route::post('/addTask','ProjectController@createTask')->name('addTask');
+    });
     
 });
 
@@ -39,4 +47,9 @@ Route::group(['middleware' => 'auth'], function () {
 //     ]);
 
 //     dd($project);
+// });
+
+// use App\Models\User;
+// Route::get('test',function(){
+//     dd(User::all()->with('role')->get());
 // });

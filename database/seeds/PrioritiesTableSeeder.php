@@ -14,7 +14,19 @@ class PrioritiesTableSeeder extends Seeder
     {
         //
         Priority::create([
-            'priorityName' => 'test'
+            'priorityName' => 'Critical'
+        ]);
+
+        Priority::create([
+            'priorityName' => 'High'
+        ]);
+
+        Priority::create([
+            'priorityName' => 'Medium'
+        ]);
+
+        Priority::create([
+            'priorityName' => 'Low'
         ]);
     }
 }
