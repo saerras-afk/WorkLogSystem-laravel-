@@ -10,7 +10,32 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.bundle.js') }}" defer></script>
+    <script src="{{ asset('bootstrap.bundle.js.map') }}" defer></script>
+    <script src="{{ asset('bootstrap.bundle.min.js') }}" defer></script>
+    <script src="{{ asset('bootstrap.bundle.min.js.map') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.js') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.js.map') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.min.js.map') }}" defer></script> --}}
+
+    {{-- CSS --}}
+    {{-- <script src="{{ asset('css/app.css') }}" defer></script>
+    <script src="{{ asset('css/bootstrap-grid.css') }}" defer></script>
+    <script src="{{ asset('css/bootstrap-grid.css.map') }}" defer></script>
+    <script src="{{ asset('css/bootstrap-grid.min.css') }}" defer></script>
+    <script src="{{ asset('css/bootstrap-grid.min.css.map') }}" defer></script>
+    <script src="{{ asset('css/bootstrap-reboot.css') }}" defer></script>
+    <script src="{{ asset('css/bootstrap-reboot.min.css') }}" defer></script>
+    <script src="{{ asset('css/bootstrap-reboot.min.css.map') }}" defer></script>
+    <script src="{{ asset('css/bootstrap.css') }}" defer></script>
+    <script src="{{ asset('css/bootstrap.css.map') }}" defer></script>
+    <script src="{{ asset('css/bootstrap.min.css') }}" defer></script>
+    <script src="{{ asset('css/bootstrap.min.css.map') }}" defer></script>
+    <script src="{{ asset('css/login.css') }}" defer></script>
+    <script src="{{ asset('css/main.css') }}" defer></script> --}}
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -86,4 +111,6 @@
         </main>
     </div>
 </body>
+
+@yield('jsFiles')
 </html>

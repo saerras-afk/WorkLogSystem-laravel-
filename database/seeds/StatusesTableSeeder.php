@@ -14,7 +14,20 @@ class StatusesTableSeeder extends Seeder
     {
         //
         Status::create([
-            'statusName' => 'test'
+            'statusName' => 'Waiting PM RA'
         ]);
+
+        Status::create([
+            'statusName' => 'Waiting Dev RA'
+        ]);
+
+        Status::create([
+            'statusName' => 'Begin Development'
+        ]);
+
+        Status::create([
+            'statusName' => 'Complete'
+        ]);
+
     }
 }
