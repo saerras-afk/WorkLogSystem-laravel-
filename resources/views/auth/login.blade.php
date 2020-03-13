@@ -70,13 +70,13 @@
         </div>
     </div>
 </div> -->
-<div>
+<!-- <div>
 <form method='POST' action="{{ route('login') }}">
     @csrf
     <input type="text" name="username" value="{{ old('username') }}">
     <input type="password" name="password" value="{{ old('password') }}">
     <button type="submit">login</button>
 </form>
-</div>
+</div> -->
 
 @endsection
