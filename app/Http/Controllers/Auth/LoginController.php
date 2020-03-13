@@ -57,13 +57,16 @@ class LoginController extends Controller
             $this->fireLockoutEvent($request);
 
             return $this->sendLockoutResponse($request);
-        }
+    }
 
         if ($this->attemptLogin($request)) {
+
+            // return 'sud';
             return $this->sendLoginResponse($request);
         }
         $this->incrementLoginAttempts($request);
 
+        // return 'wa'.$request['username'].' '.$request['password'];
         return $this->sendFailedLoginResponse($request);
     }
 

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- Scripts -->
 <!-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -70,13 +71,43 @@
         </div>
     </div>
 </div> -->
-<div>
+{{-- <div>
 <form method='POST' action="{{ route('login') }}">
     @csrf
     <input type="text" name="username" value="{{ old('username') }}">
     <input type="password" name="password" value="{{ old('password') }}">
     <button type="submit">login</button>
 </form>
-</div>
+</div> --}}
+ <div class="login-form">
+    <div>
+        {{-- <div>
+            <img id="img_logo" alt="Logo" src="@Url.Content("~/Content/Images/Logo.png")" />
+        </div> --}}
+    </div>
+    <div>
 
+            <form method='POST' action="{{ route('login') }}">
+                    @csrf
+                    <input class="input" type="text" name="username" value="{{ old('username') }}">
+                    <input class="input" type="password" name="password" value="{{ old('password') }}">
+                    <button id="login" type="submit">Login</button>
+                    <p>Satisfaction with iComm Work Log System</p>
+            </form>
+        {{-- @using (Html.BeginForm("Validate", "Login", FormMethod.Post))
+        {
+
+            @Html.TextBoxFor(model => model.userName, new { placeholder = "Username", @required = "required", @class = "input" })
+
+            @Html.TextBoxFor(model => model.password, new { placeholder = "Password", @required = "required", @type = "password", @class = "input" })
+            <br />
+            <br>
+            <label class="field-validation-error">@Html.DisplayFor(model => model.LoginErrorMessage)</label>
+            <br>
+            <input type="submit" name="name" id="login" value="Login" />
+            <p/>
+            <p>Satisfaction with iComm Work Log System</p>
+        } --}}
+    </div>
+</div> 
 @endsection

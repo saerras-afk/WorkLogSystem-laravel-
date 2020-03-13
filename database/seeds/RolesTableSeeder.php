@@ -18,6 +18,10 @@ class RolesTableSeeder extends Seeder
         ]);
 
         Role::create([
+            'positionName' => 'Project Manager',
+        ]);
+
+        Role::create([
             'positionName' => 'Scrum Master',
         ]);
         
