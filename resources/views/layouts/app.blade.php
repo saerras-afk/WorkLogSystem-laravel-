@@ -75,7 +75,7 @@
             <aside>
                 <ul>
                     <li>dashboard</li>
-                    <li>projects</li>
+                    <li><a href="{{ route('project') }}">projects</a></li>
                     <li>reports</li>
                     <li>manage user</li>
                 </ul>
