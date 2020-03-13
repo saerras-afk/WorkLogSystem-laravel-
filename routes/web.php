@@ -24,19 +24,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('/home', 'HomeController@index')->name('home');
-
-    Route::get('/project','ProjectController@index')->name('project');
     
 });
 
-// Route::get('test','ProjectController@getTask');
-// use App\Models\Project;
-// Route::get('test/{projectName}',function($projectName){
 
-//     $project = Project::create([
-//         'projectName' => $projectName,
-//         'created_by' => \Auth::user()->firstname.' '.\Auth::user()->lastname
-//     ]);
 
-//     dd($project);
-// });
+
