@@ -17,6 +17,7 @@ class CreateNotificationsTable extends Migration
             $table->increments('id')->unsigned();
             $table->integer('userId')->unsigned();
             $table->integer('taskId')->unsigned();
+            $table->boolean('isNotified');
             $table->timestamps();
 
             $table->foreign('userId')->references('id')->on('users');

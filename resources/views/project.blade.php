@@ -4,7 +4,7 @@
 
     <div class="container ">
         <label for="rg-from" style="color: #01417F; font-weight: bold; margin-left:20px;">Projects: </label> &nbsp; &nbsp;
-        <select class="field" name="project" id="project">
+        <select class="field" name="projectId" id="project">
             <option value=""></option>
             @foreach ($project as $pr)
                 <option value="{{ $pr->id }}">{{ $pr->projectName }}</option>
@@ -12,7 +12,7 @@
         </select>
         <i data-toggle="modal" class="fa fa-plus-circle" style="color:#01417F; font-size: 15px; margin-left: 10px;" id="add-project"></i>
         
-        <select class="field" name="sprint" id="sprint">
+        <select class="field" name="sprintId" id="sprint">
             <option value=""></option>
             @foreach ($sprint as $sp)
                 <option value="{{ $sp->id }}">{{ $sp->sprintNo }}</option>
@@ -28,7 +28,7 @@
                     <thead style="background-color: #01417F;width:100%;">
                     </thead>
                     <tbody style="font-weight: bold;" id="task_wrapper">
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -41,6 +41,7 @@
 @section('jsFiles')
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <script>
+        currTask = null;
         data ={
             sprintId : null,
             projectId :null
@@ -48,17 +49,69 @@
 
         $("select[name=projectId]").change(function () {
             data.projectId = $("select[name=projectId]").val();
-            // getTaskList();
-
-            alert('click');
+            getTaskList();
         });
 
         $("select[name=sprintId]").change(function () {
             data.sprintId = $("select[name=sprintId]").val();
-            // getTaskList();
-            alert('click');
+            getTaskList();
         });
 
+        function startLog(taskId) {
+            var formData = {
+                _token : '{{ csrf_token() }}',
+                Id : taskId
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{ url('project/startLog') }}",
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        logOk = false;
+                    }
+                }
+            });
+        }
+
+        function endLog(taskId) {
+            var formData = {
+                _token : '{{ csrf_token() }}',
+                Id: taskId
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{ url('project/endLog') }}",
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        logOk = false;
+                    }
+                }
+            });
+        }
+
+        $("#task_wrapper").on('click', function (e) {
+            currTask = e.target.id
+            var clickedElem = e.target.className;
+
+            switch (clickedElem) {
+                case 'taskName':
+                    // populateTaskDetails(currTask);
+                    alert('taskname');
+                    break;
+                case 'startBtn':
+                    checkLog(clickedElem);
+                    break;
+                case 'endBtn':
+                    checkLog(clickedElem);
+                default:
+            }
+        });
+        
+        //get task ajax
         function getTaskList(){
             if(data.sprintId != null && data.projectId != null){
                 data._token = '{{ csrf_token() }}';
@@ -66,13 +119,65 @@
                     type: 'POST',
                     url: "{{ url('project/getTask') }}",
                     data: data,
+                    dataType: "json",
                     success: function(data){
                         if(data.success){
-                            alert('success');
+                            for(i = 0; i<data['list'].length;i++){
+                                $("#task_wrapper").append(template(data['list'][i]));
+                            }
                         }
                     }
                 });
             }
+        }
+
+        //template tasklist
+        function template(taskData){
+            return "<tr>" +
+                "<td ><u class='taskName' id='" + taskData['id'] + "'>" + taskData['taskName'] + "</u></td>" +
+                "<td style='text-align: center;'>" +
+                "<button style='color: black;'><b class='startBtn' id='" + taskData['id'] + "'>START</b></button>&nbsp;" +
+                "<button  style='color: black;'><b class='endBtn'id='" + taskData['id'] + "'>END</b></button>&nbsp;" +
+                "<i class='far fa-file-alt' style='font-size: 20px; color: #01417F'></i>" +
+                "</td>" +
+                "< td style = 'text-align: right;' >" +
+                "<i class='fa fa-edit' style='font-size: 20px; color: #01417F'></i>" +
+                "<i class='fa fa-trash' style='font-size: 20px; color: #01417F'></i>" +
+                "</td >" 
+                "<td style='text-align: right;'>" +
+                "<i class='fa fa-edit' style='font-size: 20px; color: #01417F'></i>" +
+                "<i class='fa fa-trash' style='font-size: 20px; color: #01417F'></i>" +
+                "</td>" +
+            "</tr > ";
+        }
+
+        function checkLog(clickedElem){
+
+            var formData = {
+                _token : '{{ csrf_token() }}',
+                btnType : clickedElem
+            }
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('project/checkLog') }}",
+                data: formData,
+                dataType: "json",
+                success: function(data){
+                    if(!data.success){
+                        switch (data.type) {
+                            case 'startBtn':
+                                startLog(currTask);
+                                break;
+                            case 'endBtn':
+                                endLog(currTask);
+                                break;
+                        }
+                    }else{
+                        alert('error');
+                        //TODO :: error action
+                    }
+                }
+            });
         }
 
         //add project ajax

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Sprint;
 use App\Models\Task;
+use App\Models\Log;
 
 class ProjectController extends Controller
 {
@@ -28,15 +29,105 @@ class ProjectController extends Controller
 
     public function getTasks(Request $request){
 
-        // dd('waakak');
-        // try{
-            
-        // }catch(Exception $e){
+        $success = false;
+        $params = [
+            'projectId' => $request['projectId'],
+            'sprintId' => $request['sprintId']
+        ];
 
-        // }
+        $tasklist = Task::where($params)->get();
+
+        if(!empty($tasklist)){
+            $success = true;
+        }else{
+            $tasklist = "no data";
+        }
+        return json_encode([
+            'success' => $success,
+            'list' => $tasklist
+        ]);
+    }
+
+    public function startLog(Request $request){
+        try{
+            Log::create([
+                'userId' => \Auth::user()->id, 
+                'taskId' => $request['Id'], 
+                'date' => date('Y-m-d H:i:s'),
+                'startTime' => date('H:i:s'),
+                'endTime' 
+                => null
+            ]);
+
+            $log = true;
+        }catch(Exception $e){
+            $log = false;
+        }
 
         return json_encode([
-            'success' => true
+            'success' => $log
+        ]);
+    }
+
+    public function checkLog(Request $request){
+        try{
+            $message = '';
+            $params = [
+                'userId' => \Auth::user()->id
+            ];
+
+            $log = Log::where($params)->latest()->first();
+
+            switch ($request['btnType']) {
+                case 'startBtn':
+                    if($log->endTime == null){
+                        $message = 'please end first your ongoing task';
+                        $status = true;
+                    }else{
+                        $status = false;
+                    }
+                    break;
+                case 'endBtn':
+                    if($log->endTime != null){
+                        $message = 'you have no ongoing task';
+                        $status = true;
+                    }else{
+                        $status = false;
+                    }
+                    break;
+            }
+            
+        }catch(Exception $e){
+            $message = 'shit';
+            $status = false;
+        }
+
+        return json_encode([
+            'success' => $status,
+            'type' => $request['btnType'],
+            'message' => $message
+        ]);
+    }
+
+    public function endLog(Request $request){
+        try{
+            $params = [
+                'userId' => \Auth::user()->id,
+                'taskId' => $request['Id']
+            ];
+
+            $log = Log::where($params)->latest()->first();
+
+            $log->endTime = date('H:i:s');
+            $log->save();
+
+            $status = true;
+        }catch(Exception $e){
+            $status = false;
+        }
+
+        return json_encode([
+            'success' => $status
         ]);
     }
 
@@ -81,7 +172,7 @@ class ProjectController extends Controller
     public function createTask(Request $request){
 
         try{
-            Task::create([
+            $task = Task::create([
                 'userId' => \Auth::user()->id,
                 'projectId' => $request['projectId'],
                 'priorityId' => $request['priorityId'],
@@ -96,7 +187,8 @@ class ProjectController extends Controller
                 'developer' => $request['developer'],
                 'deadline' =>$this->makeDate($request['deadline']),
                 'blnFlag' => $request['binFlag']
-            ]);    
+            ]); 
+            
             $task = true;
         }catch(Exception $e){
             $task = false;
@@ -105,6 +197,19 @@ class ProjectController extends Controller
         return json_encode([
             'success' => $task
         ]);
+    }
+
+    public function createNotif($id){
+        try{
+            Notification::create([
+                'userId' => $id, 
+                'taskId' => $taskId, 
+                'isNotified' => 0,
+            ]);
+
+        }catch(Exception $e){
+
+        }
     }
 
     public function makeDate(string $date){

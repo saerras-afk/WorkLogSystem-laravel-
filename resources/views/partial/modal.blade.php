@@ -130,3 +130,108 @@
         </div>
     </div>
 </div>
+<div id="taskDetailModal" class="modal">
+    <div class="modal-contentT">
+        <div class="modal-header" style="height:45px;">
+            <span id="tdx" class="close" style="color:#fff;margin-top:8px;">&times;</span>
+            <h4>Task Details</h4>
+        </div>
+        <div class="modal-bodyT">
+            <div class="issueDetails" style="width:40%;">
+                <table class="iTable" style="background-color:gainsboro	;margin-top:20px; width:95%;">
+                    <tr>
+                        <th colspan="2">Issue Details</th>
+                    </tr>
+                    <tr>
+                        <th id="key">Key:</th>
+                        <td>XERO-755</td>
+                    </tr>
+                    <tr>
+                        <th id="stat">status:</th>
+                        <td>Resolved</td>
+                    </tr>
+                    <tr>
+                        <th id="priority">Priority:</th>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <th id="assignee">Assignee:</th>
+                        <td>XERO-755</td>
+                    </tr>
+                    <tr>
+                        <th id="reporter">Reporter:</th>
+                        <td>XERO-755</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="task" style="width:100%;">
+                <table class="iTable" style="margin-top:20px;background-color:gainsboro;">
+                    <tr>
+                        <th id="projectId">Project:</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th id="summary">Summary:</th>
+                        <td></td>
+                    </tr>
+                </table>
+                <table class="tTable">
+                    <tr>
+                        <th id="taskId">Task:</th>
+                        <td>fsadfsadfag</td>
+                    </tr>
+                    <tr>
+                        <th id="userId">User:</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th id="tname">Task Name:</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th id="desc">Description:</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th id="pm">Project Manager:</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th id="sm">Scrum Master:</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th id="dev">Developer:</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th id="qa">Quality Assurance:</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th id="pm">Project Manager:</th>
+                        <td>Adrianne Rosales</td>
+                    </tr>
+ 
+ 
+                    <tr>
+                        <th id="createdAt">Created At:</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th id="dline">Deadline:</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th id="sprintId">Sprint:</th>
+                        <td></td>
+                    </tr>
+ 
+ 
+                </table>
+            </div>
+        </div>
+        <div class="footer" style="height:20px;">
+        </div>
+    </div>
+</div>
