@@ -31,7 +31,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/addSprint','ProjectController@createSpri')->name('addSprint');
         Route::post('/addTask','ProjectController@createTask')->name('addTask');
     });
-
+    Route::get('/ManageUser', 'ManageUserController@index')->name('manageUser');
+    
+    Route::get('/Report', 'ReportController@index')->name('report');
     
 });
 

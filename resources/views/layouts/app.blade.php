@@ -12,6 +12,7 @@
     <!-- Scripts -->
     <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
         <script src="{{ asset('js/projJS/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/projJS/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/projJS/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('js/projJS/jquery.easing.min.js') }}"></script>
         <script src="{{ asset('js/projJS/sb-admin-2.min.js') }}"></script>
@@ -22,6 +23,7 @@
     <!-- <link href="{{ asset('css/all.min.css') }}" rel="stylesheet"> -->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet"> 
     <link href="{{ asset('css/modal.css') }}" rel="stylesheet"> 
+    <!-- <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">  -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -43,7 +45,7 @@
             </div>        
             <li class="dropdown-divider"></li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('home') }}">
                     <i class=" fa fa-area-chart"></i>
                     <span>DASHBOARD</span>
                 </a>
@@ -61,14 +63,14 @@
         
           <li class="dropdown-divider"></li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('report') }}">
                     <i class="fa fa-fw fa-table"></i>
                     <span>REPORT</span>
                 </a>
             </li>
             <li class="dropdown-divider"></li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('manageUser') }}">
                     <i class="fa fa-users"></i>
                     <span>MANAGE USER</span>
                 </a>

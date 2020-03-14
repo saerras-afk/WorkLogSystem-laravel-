@@ -3,15 +3,34 @@
 @section('content')
 
     <div class="container ">
-        <label for="rg-from" style="color: #01417F; font-weight: bold; margin-left:20px;">Projects: </label> &nbsp; &nbsp;
+        <br>
+        <br>
+        <br>
+        <div>
+        <button style="background-color:#01417F;color:white;"  id="add-project">
+            <i class="fa fa-folder" ></i>
+       <span><b> Add New Project</b></span></button>
+       <button style="background-color:#01417F;color:white;"  id="add-sprint">
+            <i class="fa fa-plus" ></i>
+       <span><b> Add New Sprint</b></span></button>
+    </div>
+    <div>
+        <label for="rg-from" style="color: #01417F; font-weight: bold; ">Projects: </label> &nbsp; &nbsp;
         <select class="field" name="project" id="project">
             <option value=""></option>
             @foreach ($project as $pr)
                 <option value="{{ $pr->id }}">{{ $pr->projectName }}</option>
             @endforeach
         </select>
-        <i data-toggle="modal" class="fa fa-plus-circle" style="color:#01417F; font-size: 15px; margin-left: 10px;" id="add-project"></i>
-        
+        <label for="rg-from" style="color: #01417F; font-weight: bold; margin-left:20px;">Sprint Numbers: </label> &nbsp; &nbsp;
+        <select class="field" name="sprint" id="sprint">
+            <option value=""></option>
+            @foreach ($sprint as $sp)
+                <option value="{{ $sp->id }}">{{ $sp->sprintNo }}</option>
+            @endforeach
+        </select>
+       
+       </div>
         <div id="projModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -35,21 +54,69 @@
     </div>
 
 
-        <select class="field" name="sprint" id="sprint">
-            <option value=""></option>
-            @foreach ($sprint as $sp)
-                <option value="{{ $sp->id }}">{{ $sp->sprintNo }}</option>
-            @endforeach
-        </select>
-        <i class="fa fa-plus-circle" style="color:#01417F; font-size: 15px; margin-left: 10px;" id="add-sprint"></i>
-     
-
         
 
-        <div class="task-container">
+        <br>
+        <br>
 
-        </div>
-        <button  id="add-task">add task</button>
+        <div class="task-container">
+        <div class="table-responsive-sm" style="height: 100%; width:90%;">
+                <table class="table table-hover">
+
+                    <thead style="background-color: #01417F;">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-weight: bold;">
+                        <tr>
+                            <td><a href="#" data-toggle="modal" data-target="#taskModal"><u>Task1</u></a></td>
+                            <td style="text-align: center;">
+                                <button class="btn-success" style="color: black;"><b>START</b></button>&nbsp;
+                                <button class="btn-danger" style="color: black;"><b>END</b></button>&nbsp;
+                                <i class='far fa-file-alt' style="font-size: 20px; color: #01417F"></i>
+                            </td>
+                            <td style="text-align: right;">
+                                <i class="fa fa-edit" style="font-size: 20px; color: #01417F"></i>
+                                <i class="fa fa-trash" style="font-size: 20px; color: #01417F"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" data-toggle="modal" data-target="#taskModal"><u>Task2</u></a></td>
+                            <td style="text-align: center;">
+                                <button class="btn-success" style="color: black;"><b>START</b></button>&nbsp;
+                                <button class="btn-danger" style="color: black;"><b>END</b></button>&nbsp;
+                                <i class='far fa-file-alt' style="font-size: 20px; color: #01417F"></i>
+                            </td>
+                            <td style="text-align: right;">
+                                <i class="fa fa-edit" style="font-size: 20px; color: #01417F"></i>
+                                <i class="fa fa-trash" style="font-size: 20px; color: #01417F"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" data-toggle="modal" data-target="#taskModal"><u>Task3</u></a></td>
+                            <td style="text-align: center;">
+                                <button class="btn-success" style="color: black;"><b>START</b></button>&nbsp;
+                                <button class="btn-danger" style="color: black;"><b>END</b></button>&nbsp;
+                                <i class='far fa-file-alt' style="font-size: 20px; color: #01417F"></i>
+                            </td>
+                            <td style="text-align: right;">
+                                <i class="fa fa-edit" style="font-size: 20px; color: #01417F"></i>
+                                <i class="fa fa-trash" style="font-size: 20px; color: #01417F"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                </tr>
+                    </tbody>
+                </table>
+                <button style="background-color:#01417F;color:white;"  id="btn-create">
+            <i class="fa fa-plus" ></i>
+            <span><b> Add New Task</b></span></button>
+            </div>
+       </div>
+        
     </div>
    
     <div id="sprintModal" class="modal">
