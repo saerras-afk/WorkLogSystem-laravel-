@@ -26,6 +26,20 @@ class ProjectController extends Controller
         return view('project',compact('project','sprint'));
     }
 
+    public function getTasks(Request $request){
+
+        // dd('waakak');
+        // try{
+            
+        // }catch(Exception $e){
+
+        // }
+
+        return json_encode([
+            'success' => true
+        ]);
+    }
+
     public function createProj(Request $request){
         $data = $request->all();
 

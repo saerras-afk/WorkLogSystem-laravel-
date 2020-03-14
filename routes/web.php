@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/addProject','ProjectController@createProj')->name('addProject');
         Route::post('/addSprint','ProjectController@createSpri')->name('addSprint');
         Route::post('/addTask','ProjectController@createTask')->name('addTask');
+        Route::post('/getTask','ProjectController@getTasks')->name('getTasks');
     });
 
     
