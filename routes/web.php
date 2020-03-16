@@ -21,7 +21,7 @@ Route::group(['middleware' => 'guest'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+    Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('/home', 'HomeController@index')->name('home');
 
@@ -30,7 +30,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/addProject','ProjectController@createProj')->name('addProject');
         Route::post('/addSprint','ProjectController@createSpri')->name('addSprint');
         Route::post('/addTask','ProjectController@createTask')->name('addTask');
+        Route::post('/getTask','ProjectController@getTasks')->name('getTasks');
+        Route::post('/startLog','ProjectController@startLog')->name('startLog');
+        Route::post('/endLog','ProjectController@endLog')->name('endLog');
+        Route::post('/checkLog','ProjectController@checkLog')->name('checkLog');
     });
+
     
 });
 

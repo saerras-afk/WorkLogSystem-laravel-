@@ -19,7 +19,7 @@ class CreateLogsTable extends Migration
             $table->integer('taskId')->unsigned();
             $table->date('date');
             $table->time('startTime');
-            $table->time('endTime');
+            $table->time('endTime')->nullable();
             $table->timestamps();
 
             $table->foreign('userId')->references('id')->on('users');

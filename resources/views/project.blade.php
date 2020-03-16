@@ -1,256 +1,271 @@
 @extends('layouts.app')
-
+<link href="{{ asset('css/project.css') }}" rel="stylesheet"> 
 @section('content')
-    <div class="container">
-        <select name="sprint" id="sprint">
-            <option value=""></option>
-            @foreach ($sprint as $sp)
-                <option value="{{ $sp->id }}">{{ $sp->sprintNo }}</option>
-            @endforeach
-        </select>
-        <button id="add-sprint">add sprint</button>
 
-        <select name="project" id="project">
+    <div class="container ">
+        <label for="rg-from" style="color: #01417F; font-weight: bold; margin-left:20px;">Projects: </label> &nbsp; &nbsp;
+        <select class="field" name="projectId" id="project">
             <option value=""></option>
             @foreach ($project as $pr)
                 <option value="{{ $pr->id }}">{{ $pr->projectName }}</option>
             @endforeach
         </select>
-        <button id="add-project">add project</button>
+        <i data-toggle="modal" class="fa fa-plus-circle" style="color:#01417F; font-size: 15px; margin-left: 10px;" id="add-project"></i>
+        
+        <select class="field" name="sprintId" id="sprint">
+            <option value=""></option>
+            @foreach ($sprint as $sp)
+                <option value="{{ $sp->id }}">{{ $sp->sprintNo }}</option>
+            @endforeach
+        </select>
+        <i class="fa fa-plus-circle" style="color:#01417F; font-size: 15px; margin-left: 10px;" id="add-sprint"></i>
+     
+        <div class="col-6" id="dashTable" style="width:100%;">
+            <div class="table-responsive-sm" style="height: 100%; width: 100%;">
+                <br />
+                <br />
+                <table class="table table-hover" style="width:100%; height:100%;">
+                    <thead style="background-color: #01417F;width:100%;">
+                    </thead>
+                    <tbody style="font-weight: bold;" id="task_wrapper">
 
-        <div class="task-container">
-
+                    </tbody>
+                </table>
+            </div>
         </div>
         <button  id="add-task">add task</button>
     </div>
-    <div id="projModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="test">Add Project</h4>
-            </div>
-            <div class="modal-body" id="addpbody">
-                <form>
-                    <div class="form-group" style="font-weight: bold;font-family: Tahoma;color:#01417F;">
-                        Project Name:
-                        <input id="ProjectName" type="text" value="">
-                        <br />
-                    </div>
-                </form>
-            </div>
-            <hr>
-            <div class="modal-footer" id="addfooter">
-                <button id="projectSumbit" type="button" class="sbutton" style="margin-left: 50%;background-color: #01417F;">SAVE</button>
-                <button type="button" class="cbutton" id="canbutton" style="background-color: gray;">CANCEL</button>
-            </div>
-        </div>
-    </div>
-    <div id="sprintModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="test">Add Sprint Number</h4>
-            </div>
-            <div class="modal-body" id="addsbody">
-                <form>
-                    <div class="form-group" style="font-weight: bold;font-family: Tahoma;color:#01417F;">
-                        Sprint Number:
-                        <input id="SprintNo" type="text" class="form-control" style="margin-left:39px;margin-bottom:3px; border: 2px solid #01417F;">
-                        <br />
-                        Start Date:
-                        <input id="StartDate" type="text" class="form-control" style="margin-left:70px; margin-bottom:3px; border: 2px solid #01417F;">
-                        <br />
-                        Release Date:
-                        <input id="ReleaseDate" type="text" class="form-control" style="margin-left:50px; border: 2px solid #01417F;">
-                        <br />
-                    </div>
-                </form>
-            </div>
-            <hr>
-            <div class="modal-footer" id="addfooter">
-                <button id="sprintSumbit" type="button" class="sbutton" data-dismiss="modal" style="margin-left: 50%;background-color: #01417F;">SAVE</button>
-                <button type="button" class="cbutton" data-dismiss="modal" id="cancelbutton" style="background-color: gray;">CANCEL</button>
-            </div>
-        </div>
-    </div>
-
-<div id="taskModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="test">Add Task</h4>
-        </div>
-        <div class="modal-body" id="addsbody">
-            <form>
-                <div class="form-group" style="font-weight: bold;font-family: Tahoma;color:#01417F;">
-                    Project:
-                    <select class="pfield" name="task_projectId">
-                        <option value=""></option>
-                        @foreach ($project as $pr)
-                            <option value="{{ $pr->id }}">{{ $pr->projectName }}</option>
-                        @endforeach
-                    </select><br />
-                    Sprint:
-                    <select class="sfield" name="task_sprintId">
-                        <option value=""></option>
-                        @foreach ($sprint as $sp)
-                            <option value="{{ $sp->id }}">{{ $sp->sprintNo }}</option>
-                        @endforeach
-                    </select><br />
-                    Priority:
-                    <select class="rfield" name="task_priorityId">
-                        <option value=""></option>
-                        <option value="1">critical</option>
-                        <option value="2">high</option>
-                        <option value="3">medium</option>
-                        <option value="4">low</option>
-                    </select><br />
-                    Status:
-                    <select class="tfield" name="task_statusId">
-                        <option value=""></option>
-                        <option value="1">waiting for PM RA</option>
-                        <option value="2">waiting for DEV RA</option>
-                        <option value="3">in development</option>
-                        <option value="4">in QA</option>
-                        <option value="5">completed</option>
-                    </select><br />
-                    Task Name:
-                    <input type="text" name="taskName" class="tname" /><br /><br />
-                    Description:
-                    <textarea name="description" rows="4" cols="50"></textarea><br /><br />
-                    Project Manager:
-                    <select class="pm" name="projectManager">
-                        <option value=""></option>
-                        @foreach (App\Models\User::whereRoleid('2')->get() as $PM)
-                            <option value="{{$PM->id}}">{{$PM->firstname}} {{$PM->lastname}}</option>
-                        @endforeach
-                    </select><br />
-                    Scrum Manager:
-                    <select class="sm" name="scrumMaster">
-                        <option value=""></option>
-                        @foreach (App\Models\User::whereRoleid('3')->get() as $PM)
-                            <option value="{{$PM->id}}">{{$PM->firstname}} {{$PM->lastname}}</option>
-                        @endforeach
-                    </select><br />
-                    Developer:
-                    <select class="dev" name="developer">
-                        <option value=""></option>
-                        @foreach (App\Models\User::whereRoleid('4')->get() as $PM)
-                            <option value="{{$PM->id}}">{{$PM->firstname}} {{$PM->lastname}}</option>
-                        @endforeach
-                    </select><br />
-                    Quality Assurance:
-                    <select class="qa" name="qualityAssurance">
-                        <option value=""></option>
-                        @foreach (App\Models\User::whereRoleid('5')->get() as $PM)
-                            <option value="{{$PM->id}}">{{$PM->firstname}} {{$PM->lastname}}</option>
-                        @endforeach
-                    </select><br /><br />
-                    Summary:
-                    <textarea name="summary" rows="4" cols="50"></textarea><br /><br />
-                    <input type="hidden" name="createdAt" />
-                    Deadline:
-                    <input type="text" name="deadline" class="dline" /><br />
-                    <input type="hidden" name="binFlag" value="0" />
-                    <input type="hidden" name="isNotified" value="0" />
-                    <br />
-                </div>
-            </form>
-        </div>
-        <hr>
-        <div class="modal-footer" id="addfooter">
-            <button id="taskSubmit" type="button" class="sbutton" data-dismiss="modal" style="margin-left: 50%;background-color: #01417F;">SAVE</button>
-            <button type="button" class="cbutton" data-dismiss="modal" id="tcanbutton" style="background-color: gray;">CANCEL</button>
-        </div>
-    </div>
-</div>
+    @include('partial.modal')
 @endsection
 
 @section('jsFiles')
     <script src="{{asset('js/jquery.min.js')}}"></script>
-<script>
-
-    $('#add-project').on('click',function(){
-        $('#projModal').css('display','block');        
-    });
-
-    $('#add-sprint').on('click',function(){
-        $('#sprintModal').css('display','block');        
-    });
-
-    $('#add-task').on('click',function(){
-        $('#taskModal').css('display','block');
-    });
-
-    $('#projectSumbit').on('click', function (e) {
-        var formData = {
-            _token : '{{ csrf_token() }}',
-            ProjectName: $('#ProjectName').val()
-        }
-        $.ajax({
-            type: "POST",
-            url: "{{ url('project/addProject') }}",
-            data: formData,
-            dataType: "json",
-            success: function (data) {
-                if (data.success) {
-                    location.reload();
-                }
-            }
-        })
-    });
-
-    $('#sprintSumbit').on('click', function (e) {
-        var formData = {
-            _token : '{{ csrf_token() }}',
-            sprintNo: $('#SprintNo').val(),
-            startDate: $('#StartDate').val(),
-            releaseDate: $('#ReleaseDate').val()
-        }
-        $.ajax({
-            type: "POST",
-            url: "{{ url('project/addSprint') }}",
-            data: formData,
-            dataType: "json",
-            success: function (data) {
-                if (data.success) {
-                    // location.reload();
-                }
-
-            }
-
-        })
-    });
-
-    $('#taskSubmit').on('click', function (e) {
-
-        var formData = {
-            _token : '{{ csrf_token() }}',
-            projectId: $('select[name="task_projectId"]').children('option:selected').val(),
-            priorityId: $('select[name="task_priorityId"]').children('option:selected').val(),
-            statusId: $('select[name="task_statusId"]').children('option:selected').val(),
-            taskName: $('input[name="taskName"]').val(),
-            projectManager: $('input[name="projectManager"]').val(),
-            scrumMaster: $('input[name="scrumMaster"]').val(),
-            developer: $('input[name="developer"]').val(),
-            qualityAssurance: $('input[name="qualityAssurance"]').val(),
-            description: $('textarea[name="description"]').val(),
-            summary: $('textarea[name="summary"]').val(),
-            deadline: $('input[name="deadline"]').val(),
-            sprintId: $('select[name="task_sprintId"]').children('option:selected').val(),
-            binFlag: $('input[name="binFlag"]').val(),
+    <script>
+        currTask = null;
+        data ={
+            sprintId : null,
+            projectId :null
         }
 
-        $.ajax({
-            type: "POST",
-            url: "{{ url('project/addTask') }}",
-            data: formData,
-            dataType: "json",
-            success: function (data) {
-                if (data.success) {
-                    location.reload();
-                }
+        $("select[name=projectId]").change(function () {
+            data.projectId = $("select[name=projectId]").val();
+            getTaskList();
+        });
+
+        $("select[name=sprintId]").change(function () {
+            data.sprintId = $("select[name=sprintId]").val();
+            getTaskList();
+        });
+
+        function startLog(taskId) {
+            var formData = {
+                _token : '{{ csrf_token() }}',
+                Id : taskId
             }
-        })
-    });
+            $.ajax({
+                type: "POST",
+                url: "{{ url('project/startLog') }}",
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        logOk = false;
+                    }
+                }
+            });
+        }
 
+        function endLog(taskId) {
+            var formData = {
+                _token : '{{ csrf_token() }}',
+                Id: taskId
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{ url('project/endLog') }}",
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        logOk = false;
+                    }
+                }
+            });
+        }
 
-</script>    
+        $("#task_wrapper").on('click', function (e) {
+            currTask = e.target.id
+            var clickedElem = e.target.className;
+
+            switch (clickedElem) {
+                case 'taskName':
+                    // populateTaskDetails(currTask);
+                    alert('taskname');
+                    break;
+                case 'startBtn':
+                    checkLog(clickedElem);
+                    break;
+                case 'endBtn':
+                    checkLog(clickedElem);
+                default:
+            }
+        });
+        
+        //get task ajax
+        function getTaskList(){
+            if(data.sprintId != null && data.projectId != null){
+                data._token = '{{ csrf_token() }}';
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ url('project/getTask') }}",
+                    data: data,
+                    dataType: "json",
+                    success: function(data){
+                        if(data.success){
+                            for(i = 0; i<data['list'].length;i++){
+                                $("#task_wrapper").append(template(data['list'][i]));
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        //template tasklist
+        function template(taskData){
+            return "<tr>" +
+                "<td ><u class='taskName' id='" + taskData['id'] + "'>" + taskData['taskName'] + "</u></td>" +
+                "<td style='text-align: center;'>" +
+                "<button style='color: black;'><b class='startBtn' id='" + taskData['id'] + "'>START</b></button>&nbsp;" +
+                "<button  style='color: black;'><b class='endBtn'id='" + taskData['id'] + "'>END</b></button>&nbsp;" +
+                "<i class='far fa-file-alt' style='font-size: 20px; color: #01417F'></i>" +
+                "</td>" +
+                "< td style = 'text-align: right;' >" +
+                "<i class='fa fa-edit' style='font-size: 20px; color: #01417F'></i>" +
+                "<i class='fa fa-trash' style='font-size: 20px; color: #01417F'></i>" +
+                "</td >" 
+                "<td style='text-align: right;'>" +
+                "<i class='fa fa-edit' style='font-size: 20px; color: #01417F'></i>" +
+                "<i class='fa fa-trash' style='font-size: 20px; color: #01417F'></i>" +
+                "</td>" +
+            "</tr > ";
+        }
+
+        function checkLog(clickedElem){
+
+            var formData = {
+                _token : '{{ csrf_token() }}',
+                btnType : clickedElem
+            }
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('project/checkLog') }}",
+                data: formData,
+                dataType: "json",
+                success: function(data){
+                    if(!data.success){
+                        switch (data.type) {
+                            case 'startBtn':
+                                startLog(currTask);
+                                break;
+                            case 'endBtn':
+                                endLog(currTask);
+                                break;
+                        }
+                    }else{
+                        alert('error');
+                        //TODO :: error action
+                    }
+                }
+            });
+        }
+
+        //add project ajax
+        $('#add-project').on('click',function(){
+            $('#projModal').css('display','block');        
+        });
+        
+        //add sprint ajax
+        $('#add-sprint').on('click',function(){
+            $('#sprintModal').css('display','block');        
+        });
+
+        //add task ajax
+        $('#add-task').on('click',function(){
+            $('#taskModal').css('display','block');
+        });
+
+        $('#projectSumbit').on('click', function (e) {
+            var formData = {
+                _token : '{{ csrf_token() }}',
+                ProjectName: $('#ProjectName').val()
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{ url('project/addProject') }}",
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        location.reload();
+                    }
+                }
+            })
+        });
+
+        $('#sprintSumbit').on('click', function (e) {
+            var formData = {
+                _token : '{{ csrf_token() }}',
+                sprintNo: $('#SprintNo').val(),
+                startDate: $('#StartDate').val(),
+                releaseDate: $('#ReleaseDate').val()
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{ url('project/addSprint') }}",
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        // location.reload();
+                    }
+
+                }
+
+            })
+        });
+
+        $('#taskSubmit').on('click', function (e) {
+
+            var formData = {
+                _token : '{{ csrf_token() }}',
+                projectId: $('select[name="task_projectId"]').children('option:selected').val(),
+                priorityId: $('select[name="task_priorityId"]').children('option:selected').val(),
+                statusId: $('select[name="task_statusId"]').children('option:selected').val(),
+                taskName: $('input[name="taskName"]').val(),
+                projectManager: $('input[name="projectManager"]').val(),
+                scrumMaster: $('input[name="scrumMaster"]').val(),
+                developer: $('input[name="developer"]').val(),
+                qualityAssurance: $('input[name="qualityAssurance"]').val(),
+                description: $('textarea[name="description"]').val(),
+                summary: $('textarea[name="summary"]').val(),
+                deadline: $('input[name="deadline"]').val(),
+                sprintId: $('select[name="task_sprintId"]').children('option:selected').val(),
+                binFlag: $('input[name="binFlag"]').val(),
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "{{ url('project/addTask') }}",
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        location.reload();
+                    }
+                }
+            })
+        });
+    
+    </script>    
 @endsection
