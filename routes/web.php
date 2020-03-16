@@ -33,20 +33,3 @@ Route::group(['middleware' => 'auth'], function () {
     });
     
 });
-
-// Route::get('test','ProjectController@getTask');
-// use App\Models\Project;
-// Route::get('test/{projectName}',function($projectName){
-
-//     $project = Project::create([
-//         'projectName' => $projectName,
-//         'created_by' => \Auth::user()->firstname.' '.\Auth::user()->lastname
-//     ]);
-
-//     dd($project);
-// });
-
-// use App\Models\User;
-// Route::get('test',function(){
-//     dd(User::all()->with('role')->get());
-// });
