@@ -1,27 +1,38 @@
 @extends('layouts.app')
-<link href="{{ asset('css/project.css') }}" rel="stylesheet"> 
-@section('content')
 
-    <div class="container ">
-        <label for="rg-from" style="color: #01417F; font-weight: bold; margin-left:20px;">Projects: </label> &nbsp; &nbsp;
-        <select class="field" name="project" id="project">
+@section('content')
+    <div class="container">
+        <select name="sprint" id="sprint">
+            <option value=""></option>
+            @foreach ($sprint as $sp)
+                <option value="{{ $sp->id }}">{{ $sp->sprintNo }}</option>
+            @endforeach
+        </select>
+        <button id="add-sprint">add sprint</button>
+
+        <select name="project" id="project">
             <option value=""></option>
             @foreach ($project as $pr)
                 <option value="{{ $pr->id }}">{{ $pr->projectName }}</option>
             @endforeach
         </select>
-        <i data-toggle="modal" class="fa fa-plus-circle" style="color:#01417F; font-size: 15px; margin-left: 10px;" id="add-project"></i>
-        
-        <div id="projModal" class="modal">
+        <button id="add-project">add project</button>
+
+        <div class="task-container">
+
+        </div>
+        <button  id="add-task">add task</button>
+    </div>
+    <div id="projModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="test"><b>Add Project</b></h6>
+                <h4 class="test">Add Project</h4>
             </div>
             <div class="modal-body" id="addpbody">
                 <form>
                     <div class="form-group" style="font-weight: bold;font-family: Tahoma;color:#01417F;">
                         Project Name:
-                        <input id="ProjectName" class="input" placeholder="Project Name" style="width:60%" type="text" value="">
+                        <input id="ProjectName" type="text" value="">
                         <br />
                     </div>
                 </form>
@@ -33,37 +44,23 @@
             </div>
         </div>
     </div>
-
-
-        <select class="field" name="sprint" id="sprint">
-            <option value=""></option>
-            @foreach ($sprint as $sp)
-                <option value="{{ $sp->id }}">{{ $sp->sprintNo }}</option>
-            @endforeach
-        </select>
-        <i class="fa fa-plus-circle" style="color:#01417F; font-size: 15px; margin-left: 10px;" id="add-sprint"></i>
-     
-
-        
-
-        <div class="task-container">
-
-        </div>
-        <button  id="add-task">add task</button>
-    </div>
-   
     <div id="sprintModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="test"><b>Add Sprint Number</b></h6>
+                <h4 class="test">Add Sprint Number</h4>
             </div>
             <div class="modal-body" id="addsbody">
                 <form>
                     <div class="form-group" style="font-weight: bold;font-family: Tahoma;color:#01417F;">
                         Sprint Number:
-                        <input id="SprintNo" type="text" class="input" >
+                        <input id="SprintNo" type="text" class="form-control" style="margin-left:39px;margin-bottom:3px; border: 2px solid #01417F;">
                         <br />
-        
+                        Start Date:
+                        <input id="StartDate" type="text" class="form-control" style="margin-left:70px; margin-bottom:3px; border: 2px solid #01417F;">
+                        <br />
+                        Release Date:
+                        <input id="ReleaseDate" type="text" class="form-control" style="margin-left:50px; border: 2px solid #01417F;">
+                        <br />
                     </div>
                 </form>
             </div>
@@ -78,7 +75,7 @@
 <div id="taskModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h6 class="test"><b>Add Task</b></h6>
+            <h4 class="test">Add Task</h4>
         </div>
         <div class="modal-body" id="addsbody">
             <form>
