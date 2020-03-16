@@ -11339,32 +11339,3 @@ body.sidebar-toggled footer.sticky-footer {
     font-size: 20px;
     color: #fff;
 }
-table {
-    border: 1px solid #01417F;
-    padding: 0em 1em;
-    border-collapse: collapse;
-    font-family: Tahoma;
-    width: 97%;
-}
-
-#muTable {
-    margin-top:3%;
-}
-
-#mtable tr,
-th,
-td {
-    border-bottom: 1px solid #01417F;
-    padding: 5px;
-}
-
-#mtable th,
-#mtable td:not(:last-child) {
-    border-right: 1px solid #01417F;
-}
-
-#muTable thead {
-    background-color: #01417F;
-    color: white;
-    text-align: center;
-}
